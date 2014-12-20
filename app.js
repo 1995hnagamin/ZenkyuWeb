@@ -179,7 +179,7 @@ function render_editor_list_view(courses) {
   return concat_templated_elements(
       courses,
       function(children) {
-        return "<ul>" + children + "</ul>";
+        return children;
       },
       function(course) {
         return Template.ConditionEditor({

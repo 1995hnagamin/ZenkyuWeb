@@ -4,20 +4,23 @@
   <meta charset="UTF-8">
   <title>Zenkyu - 京都大学学生のための熱心な講義出席管理システム
   </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./vendor/jquery-ui-1.11.2/jquery-ui.min.css"/>
+  <link rel="stylesheet" href="./vendor/dist/css/bootstrap.min.css"/>
 </head>
 <body onload="render_edit_todays_condition_view();">
-  <div id="main"></div>
+  <div id="main" class="container"></div>
+
   <script type="text/template" id="schedule-view">
-    <table>
+    <table class="table table-bordered">
       <tr><td></td><%= header %></tr>
       <%= contents %>
     </table>
     <div>
-      <a href="javascript:void(0)" onclick="render_edit_todays_condition_view();return false;">今日...</a>
-      <span>時間割</span>
+      <a class="btn btn-default" href="javascript:void(0)" onclick="render_edit_todays_condition_view();return false;">記録する</a>
     </div>
   </script>
+  
   <script type="text/template" id="schedule-elem-view">
     <td><div id='<%= dow %><%= period %>'>
       <%= name %>
@@ -25,47 +28,52 @@
     </div></td>
   </script>
   </script>
+
   <script id="course-view" type="text/template">
-    <div id="course-description">
+    <div id="course-description" class="container">
+      <h1><%= name %></h1>
       <div><%= dow %><%= period %>限</div>
-      <div><%= name %></div>
-      <div><%= present %>出席
-           <%= canceled %>休講
-           <%= absent %>自主休講
+    <hr>
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4 text-center"><%= present %>出席</div>
+        <div class="col-md-4 col-sm-4 col-xs-4 text-center"><%= canceled %>休講</div>
+        <div class="col-md-4 col-sm-4 col-xs-4 text-center"><%= absent %>自主休講</div>
       </div>
     </div>
-    <ul id="lecture-list">
+    <hr>
+    <ul id="lecture-list" class="list-group">
       <%= lectures %>
     </ul>
     <div>
-      <a href="javascript:void(0)" onclick="render_edit_todays_condition_view();return false;">今日...</a>
-      <a href="javascript:void(0)" onclick="render_schedule_view();return false;">時間割</a>
+      <a class="btn btn-default" href="javascript:void(0)" onclick="render_edit_todays_condition_view();return false;">記録する</a>
+      <a class="btn btn-default" href="javascript:void(0)" onclick="render_schedule_view();return false;">時間割を見る</a>
     </div>
   </script>
   <script type="text/template" id="lecture-view">
-    <div>
+    <li class="list-group-item">
       <div><%= date %> <%= presence %></div>
-      <div><%= memo %></div>
-    </div>
+      <ul><li><%= memo %></li></ul>
+    </li>
   </script>
   <script id="edit-todays-conditions-view" type="text/template">
     <div>
-      <div><%= month %>月<%= date %>日の出席状況</div>
-      <div>
+      <h1><%= month %>月<%= date %>日の出席</h1>
+      <ul class="list-group">
         <%= editor_list %>
-      </div>
+      </ul>
     </div>
     <div>
-      <span>今日...</span>
-      <a href="javascript:void(0)" onclick="render_schedule_view();return false;">時間割</a>
+      <a class="btn btn-default" href="javascript:void(0)" onclick="render_schedule_view();return false;">時間割を見る</a>
     </div>
     
     <div id="prompt"></div>
   </script>
   <script id="condition-editor-view" type="text/template">
+    <li class="list-group-item">    
     <div id='<%=id%>'>
       <%= period %>限 <%= name %>
     </div>
+    </li>
   </script>
   <script id="prompt-view" type="text/template">
     <div>
@@ -81,6 +89,7 @@
   <script src="./vendor/jquery.js"></script>
   <script src="./vendor/jquery-ui-1.11.2/jquery-ui.min.js"></script>
   <script src="./vendor/underscore-min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
