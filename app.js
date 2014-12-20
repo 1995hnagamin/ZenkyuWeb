@@ -213,9 +213,11 @@ function manage_condition_input(course, date) {
         });
         render_edit_todays_condition_view();
         $(this).dialog("close");
+        $("#prompt").remove();
       },
       "cancel": function() {
         $(this).dialog("close");
+        $("#prompt").remove();
       }
     }
   });
