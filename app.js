@@ -1,13 +1,26 @@
+var Grobal = {};
+
+(function() {
+  var val = localStorage.getItem("Zenkyu.Courses");
+  Grobal.Courses = (val ? JSON.parse(val) : Data);
+  
+  val = localStorage.getItem("Zenkyu.Lectures");
+  Grobal.Lectures = (val ? JSON.parse(val) : Presence);
+})();
+
 function courses() {
-  return Data;
+  return Grobal.Courses;
 }
 
 function lectures() {
-  return Presence;
+  return Grobal.Lectures;
 }
 
 function count_absence(course) {
-  return 1;
+  return _.where(lectures(),{
+    presence: "Absent",
+    courseid: course.courseid
+  }).length;
 }
 
 function concat_templated_elements(arr, parent_el, template) {
@@ -126,6 +139,7 @@ function render_lectures_view(course) {
 }
 
 function format_date(date) {
+  if (typeof(date) == "string") date = new Date(date);
   var dows = "日月火水木金土";
   return "" + (date.getMonth() + 1) + "/" + date.getDate() +
     " (" + dows[date.getDay()] + ")";
@@ -178,7 +192,10 @@ function render_editor_list_view(courses) {
 }
 
 function push_lecture(lecture) {
-  Presence.push(lecture);
+  Grobal.Lectures.push(lecture);
+  localStorage.setItem(
+      "Zenkyu.Lectures", 
+      JSON.stringify(Grobal.Lectures));
 }
 
 function manage_condition_input(course, date) {
@@ -205,6 +222,9 @@ function manage_condition_input(course, date) {
 }
 
 function equal_day(day1, day2) {
+  if (typeof(day1) == "string") day1 = new Date(day1);
+  if (typeof(day2) == "string") day2 = new Date(day2);
+  
   return (day1.getDate() == day2.getDate())
     && (day1.getMonth() == day2.getMonth());
 }
